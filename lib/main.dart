@@ -84,15 +84,17 @@ class _MyAppState extends State<MyApp> {
     RouteHelper.setupRouter();
 
     if (kIsWeb) {
-      Provider.of<SplashProvider>(context, listen: false).initSharedData();
-      _route();
+      Future.microtask((){
+        Provider.of<SplashProvider>(context, listen: false).initSharedData();
+        _route();
+      });
     }
   }
 
   void _route() {
     Provider.of<SplashProvider>(context, listen: false)
-        .initConfig(context)
-        .then((bool isSuccess) {
+      .initConfig(context)
+      .then((bool isSuccess) {
       if (isSuccess) {
         Timer(Duration(seconds: 1), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {

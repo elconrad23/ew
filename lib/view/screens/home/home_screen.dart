@@ -306,7 +306,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ]),
                           )
-                        : SizedBox(),
+                    : SizedBox(),
                     Divider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -333,24 +333,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                           context))),
                               SizedBox(height: 2),
                               Consumer<SplashProvider>(
-                                  builder: (context, config, child) => Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(
-                                                Provider.of<SplashProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .configModel
-                                                    .aboutUs,
-                                                style: poppinsRegular.copyWith(
-                                                    fontSize: Dimensions
-                                                        .FONT_SIZE_SMALL,
-                                                    color: ColorResources
-                                                        .getHintColor(
-                                                            context))),
-                                          ),
-                                        ],
-                                      )),
+                                builder: (context, config, child) => Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                          Provider.of<SplashProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .configModel!
+                                              .aboutUs,
+                                          style: poppinsRegular.copyWith(
+                                              fontSize: Dimensions
+                                                  .FONT_SIZE_SMALL,
+                                              color: ColorResources
+                                                  .getHintColor(
+                                                      context))),
+                                    ),
+                                  ],
+                              )),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -360,7 +360,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => CaptureScreen(
-                                                  key: Key("capturescreen"),
+                                                  key: Key("capturescreen.dart"),
                                                 )),
                                       );
                                     },

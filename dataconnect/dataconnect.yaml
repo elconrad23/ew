@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "enviroewatch-frontend-main"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "enviroewatch-frontend-main-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

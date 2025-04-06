@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "480452967543",
+    "project_id": "enviroewatch-frontend-main",
+    "storage_bucket": "enviroewatch-frontend-main.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480452967543:android:c2aabd37d1bd5cbcc41a72",
+        "android_client_info": {
+          "package_name": "com.enviroewatch.enviroewatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwLIeFPlpYYIM0YE4YJbqScjjEDnHRUvQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

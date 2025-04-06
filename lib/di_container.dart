@@ -18,6 +18,11 @@ import 'data/repository/report_repo.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  // External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton(() => LoggingInterceptor());
   // Core
   sl.registerLazySingleton(() => DioClient(AppConstants.BASE_URL, sl(),
       loggingInterceptor: sl(), sharedPreferences: sl()));
@@ -39,13 +44,8 @@ Future<void> init() async {
   // Provider
   sl.registerFactory(() => ThemeProvider(sharedPreferences: sl()));
   sl.registerFactory(() => SplashProvider(splashRepo: sl()));
-   sl.registerFactory(() => AuthProvider(authRepo: sl(),dioClient: sl()));
+  sl.registerFactory(() => AuthProvider(authRepo: sl(),dioClient: sl()));
   sl.registerFactory(() => ProfileProvider(profileRepo: sl()));
   sl.registerFactory(() => ReportProvider(reportRepo:sl()));
-   sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
-  // External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => Dio());
-  sl.registerLazySingleton(() => LoggingInterceptor());
+  sl.registerFactory(() => LocalizationProvider(sharedPreferences: sl()));
 }

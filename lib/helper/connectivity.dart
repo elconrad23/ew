@@ -19,7 +19,9 @@ class NetworkInfo {
         Provider.of<SplashProvider>(context, listen: false).setFirstTimeConnectionCheck(false);
       } else {
         bool isNotConnected = result == ConnectivityResult.none;
-        isNotConnected ? SizedBox() : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        if (!isNotConnected) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }        
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.black: Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),

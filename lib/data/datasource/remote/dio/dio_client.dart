@@ -19,7 +19,7 @@ class DioClient {
     required this.loggingInterceptor,
     required this.sharedPreferences,
   }) {
-    token = sharedPreferences.getString(AppConstants.TOKEN)!;
+    token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print(token);
     dio = dioC ?? Dio();
     dio

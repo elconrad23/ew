@@ -9,13 +9,15 @@ class SplashProvider extends ChangeNotifier {
   final SplashRepo splashRepo;
   SplashProvider({required this.splashRepo});
 
-  late ConfigModel _configModel;
+  ConfigModel? _configModel;
   late BaseUrls _baseUrls;
+  bool _isConfigLoaded = false;
   int _pageIndex = 0;
   bool _fromSetting = false;
   bool _firstTimeConnectionCheck = true;
+  bool get isConfigLoaded => _isConfigLoaded;
 
-  ConfigModel get configModel => _configModel;
+  ConfigModel? get configModel => _configModel;
   BaseUrls get baseUrls => _baseUrls;
   int get pageIndex => _pageIndex;
   bool get fromSetting => _fromSetting;
@@ -28,6 +30,7 @@ class SplashProvider extends ChangeNotifier {
       _configModel = ConfigModel.fromJson(apiResponse.response?.data);
       _baseUrls = ConfigModel.fromJson(apiResponse.response?.data).baseUrls;
       isSuccess = true;
+      _isConfigLoaded = true;
       notifyListeners();
     } else {
       isSuccess = false;
@@ -59,5 +62,4 @@ class SplashProvider extends ChangeNotifier {
   void setFromSetting(bool isSetting) {
     _fromSetting = isSetting;
   }
-
 }
