@@ -1,0 +1,20 @@
+0 Bare Soils
+1 Burning Bushes
+2 Dark Soils
+3 Excavated Land
+4 Exposed Roots
+5 Grasslands
+6 Gulleys Rills
+7 Overgrazing
+8 Planted Forests
+9 Soil Deposits
+10 Soil Loss
+11 Tilled Land
+12 Waste Deposits
+13 Stone Quarry
+14 Water Points
+15 Water Sedimentation
+16 Wetlands
+17 Tree Trunks
+18 Water Troughs
+19 Invalid Photo
