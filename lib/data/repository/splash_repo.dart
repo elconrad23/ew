@@ -19,7 +19,15 @@ class SplashRepo {
         cancelToken: CancelToken(), // Provide a cancel token
         onReceiveProgress: (received, total) {},
       ); // Empty progress callback
-      return ApiResponse.withSuccess(response);
+  final data = response.data;
+
+// ✅ Safe check for null and 'errors' key
+    if (data == null || !(data is Map) || data.containsKey('errors')) {
+      final errors = data?['errors'] ?? 'Unknown error';
+      return ApiResponse.withError(errors.toString());
+    }
+
+  return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }

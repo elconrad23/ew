@@ -1,54 +1,51 @@
-/// errors : [{"code":"l_name","message":"The last name field is required."},{"code":"password","message":"The password field is required."}]
-
 class ErrorResponse {
-  late List<Errors> _errors;
+  final List<Errors> errors;
 
-  List<Errors> get errors => _errors;
+  ErrorResponse({required this.errors});
 
-  ErrorResponse({
-    required List<Errors> errors}){
-    _errors = errors;
-  }
-
-  ErrorResponse.fromJson(dynamic json) {
-    if (json["errors"] != null) {
-      _errors = [];
-      json["errors"].forEach((v) {
-        _errors.add(Errors.fromJson(v));
-      });
+  factory ErrorResponse.fromJson(Map<String, dynamic>? json) {
+    if (json == null || json['errors'] == null) {
+      print("....................");
+      print(json);
+      print("....................");
+      return ErrorResponse(errors: [
+        Errors(
+            code: 'unknown', message: 'Something went wrong. Please try again.')
+      ]);
     }
+
+    List<Errors> errorList = [];
+    for (var v in json['errors']) {
+      errorList.add(Errors.fromJson(v));
+    }
+
+    return ErrorResponse(errors: errorList);
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["errors"] = _errors.map((v) => v.toJson()).toList();
-      return map;
+    return {
+      'errors': errors.map((e) => e.toJson()).toList(),
+    };
   }
 }
 
 class Errors {
-  late String _code;
-  late String _message;
+  final String code;
+  final String message;
 
-  String get code => _code;
-  String get message => _message;
+  Errors({required this.code, required this.message});
 
-  Errors({
-    required String code,
-    required String message}){
-    _code = code;
-    _message = message;
-  }
-
-  Errors.fromJson(dynamic json) {
-    _code = json["code"];
-    _message = json["message"];
+  factory Errors.fromJson(Map<String, dynamic> json) {
+    return Errors(
+      code: json['code'] ?? 'unknown',
+      message: json['message'] ?? 'An unknown error occurred.',
+    );
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map["code"] = _code;
-    map["message"] = _message;
-    return map;
+    return {
+      'code': code,
+      'message': message,
+    };
   }
 }

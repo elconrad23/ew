@@ -69,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
                                                   height: 100,
                                                   fit: BoxFit.cover,
                                                   image:
-                                                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel.photo}',
+                                                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel?.photo}',
                                                   imageErrorBuilder:
                                                       (c, o, s) => Image.asset(
                                                           Images.placeholder,
@@ -85,13 +85,15 @@ class ProfileScreen extends StatelessWidget {
                                       right: -10,
                                       child: TextButton(
                                         onPressed: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfileEditScreen(
-                                                          userInfoModel:
-                                                              profileProvider
-                                                                  .userInfoModel)));
+                                          if (profileProvider.userInfoModel !=
+                                              null) {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProfileEditScreen(
+                                                            userInfoModel:
+                                                                profileProvider.userInfoModel!)));
+                                          }
                                         },
                                         child: Text(
                                           'Edit',
@@ -108,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
                                 // for name
                                 Center(
                                     child: Text(
-                                  '${profileProvider.userInfoModel.username}',
+                                  '${profileProvider.userInfoModel?.username}',
                                   style: poppinsMedium.copyWith(
                                       fontSize:
                                           Dimensions.FONT_SIZE_EXTRA_LARGE),
@@ -116,9 +118,10 @@ class ProfileScreen extends StatelessWidget {
                                 SizedBox(height: 10),
                                 Center(
                                     child: Text(
-                                  '${profileProvider.userInfoModel.phone}',
+                                  '${profileProvider.userInfoModel?.phone}',
                                   style: poppinsRegular.copyWith(
-                                    color:ColorResources.getHintColor(context),
+                                      color:
+                                          ColorResources.getHintColor(context),
                                       fontSize:
                                           Dimensions.FONT_SIZE_EXTRA_LARGE),
                                 )),

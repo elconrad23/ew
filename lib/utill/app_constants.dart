@@ -23,6 +23,4 @@ class AppConstants {
   static const String USER_PASSWORD = 'user_password';
   static const String USER_NAME = 'user_name';
   static const String TOPIC = 'enviroewatch';
- 
-  
 }

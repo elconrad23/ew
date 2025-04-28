@@ -29,7 +29,7 @@ class DioClient {
       ..httpClientAdapter
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $token'
+        if (token.isNotEmpty) 'Authorization': 'Bearer $token'
       };
     dio.interceptors.add(loggingInterceptor);
   }

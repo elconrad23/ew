@@ -8,21 +8,21 @@ class NotificationModel {
   late String _updatedAt;
 
   NotificationModel(
-      {required int id,
-        required String title,
-        required String description,
-        required String image,
-        required int status,
-        required String createdAt,
-        required String updatedAt}) {
-    this._id = id;
-    this._title = title;
-    this._description = description;
-    this._image = image;
-    this._status = status;
-    this._createdAt = createdAt;
-    this._updatedAt = updatedAt;
-  }
+    {required int id,
+    required String title,
+    required String description,
+    required String image,
+    required int status,
+    required String createdAt,
+    required String updatedAt}) {
+      this._id = id;
+      this._title = title;
+      this._description = description;
+      this._image = image;
+      this._status = status;
+      this._createdAt = createdAt;
+      this._updatedAt = updatedAt;
+    }
 
   int get id => _id;
   String get title => _title;

@@ -7,7 +7,6 @@ import 'package:enviroewatch/provider/profile_provider.dart';
 import 'package:enviroewatch/provider/report_provider.dart';
 import 'package:enviroewatch/theme/light_theme.dart';
 import 'package:enviroewatch/view/screens/auth/login_screen.dart';
-import 'package:enviroewatch/view/screens/menu/menu_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +50,9 @@ Future<void> main() async {
           flutterLocalNotificationsPlugin!, kIsWeb, MyApp.navigatorKey);
       FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
     }
-  } catch (e) {}
+  } catch (e) {
+    print('Firebase Init Error: $e');
+  }
 
   runApp(MultiProvider(
     providers: [
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
     RouteHelper.setupRouter();
 
     if (kIsWeb) {
-      Future.microtask((){
+      Future.microtask(() {
         Provider.of<SplashProvider>(context, listen: false).initSharedData();
         _route();
       });
@@ -93,14 +94,13 @@ class _MyAppState extends State<MyApp> {
 
   void _route() {
     Provider.of<SplashProvider>(context, listen: false)
-      .initConfig(context)
-      .then((bool isSuccess) {
+        .initConfig(context)
+        .then((bool isSuccess) {
       if (isSuccess) {
         Timer(Duration(seconds: 1), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
             Provider.of<AuthProvider>(context, listen: false).updateToken();
-            Navigator.of(context).pushReplacementNamed(RouteHelper.menu,
-                arguments: MenuScreen());
+            Navigator.of(context).pushReplacementNamed(RouteHelper.menu);
           } else {
             Navigator.pushNamedAndRemoveUntil(
                 context, RouteHelper.login, (route) => false,

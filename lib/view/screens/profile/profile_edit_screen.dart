@@ -116,7 +116,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                               height: 80,
                                               fit: BoxFit.cover,
                                               image:
-                                                  '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel.photo}',
+                                                  '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel?.photo}',
                                               imageErrorBuilder: (c, o, s) =>
                                                   Image.asset(
                                                       Images.placeholder,
@@ -339,9 +339,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     _passwordController.text.trim();
                                 String _confirmPassword =
                                     _confirmPasswordController.text.trim();
-                                if (profileProvider.userInfoModel.phone ==
+                                if (profileProvider.userInfoModel?.phone ==
                                         _phoneNumber &&
-                                    profileProvider.userInfoModel.username ==
+                                    profileProvider.userInfoModel?.username ==
                                         _usernameController.text &&
                                     profileProvider.file == null &&
                                     profileProvider.data == null &&
@@ -365,18 +365,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   showCustomSnackBar(
                                       'Passwords dont match', context);
                                 } else {
-                                  UserInfoModel updateUserInfoModel =
+                                  UserInfoModel? updateUserInfoModel =
                                       profileProvider.userInfoModel;
-                                  updateUserInfoModel.phone =
+                                  updateUserInfoModel?.phone =
                                       _phoneController.text;
-                                  updateUserInfoModel.username =
+                                  updateUserInfoModel?.username =
                                       _usernameController.text;
 
                                   print(_usernameController.text);
                                   print(profileProvider.country);
                                   ResponseModel _responseModel =
                                       await profileProvider.updateUserInfo(
-                                    updateUserInfoModel,
+                                    updateUserInfoModel!,
                                     profileProvider.file,
                                     profileProvider.data,
                                     Provider.of<AuthProvider>(context,

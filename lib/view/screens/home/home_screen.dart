@@ -242,11 +242,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                    profileProvider
-                                                                .userInfoModel !=
-                                                            null
-                                                        ? 'Good day ${profileProvider.userInfoModel.username}!'
-                                                        : 'Good day',
+                                                    profileProvider.userInfoModel != null
+                                                      ? 'Good day ${profileProvider.userInfoModel?.username}!'
+                                                      : 'Good day',
                                                     style: poppinsBold.copyWith(
                                                         fontSize: 14,
                                                         color: Colors.white)),
@@ -276,28 +274,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ]),
                               ),
                             )),
-                    address != null
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 20),
+                    address.street?.isNotEmpty == true
+                      ? Padding( padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
                             child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text('Current location',
-                                      style: poppinsBold.copyWith(
-                                          fontSize: 14,
-                                          color: ColorResources.getTextColor(
-                                              context))),
+                                    style: poppinsBold.copyWith( fontSize: 14,
+                                      color: ColorResources.getTextColor(context))),
                                   SizedBox(height: 2),
                                   Row(
                                     children: [
                                       Flexible(
-                                        child: Text(
-                                            '${address.subLocality},${address.locality}',
-                                            style: poppinsRegular.copyWith(
-                                                fontSize:
-                                                    Dimensions.FONT_SIZE_SMALL,
+                                        child: Text('${address.subLocality},${address.locality}',
+                                          style: poppinsRegular.copyWith(
+                                            fontSize:Dimensions.FONT_SIZE_SMALL,
                                                 color:
                                                     ColorResources.getHintColor(
                                                         context))),
@@ -306,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ]),
                           )
-                    : SizedBox(),
+                    : SizedBox.shrink(),
                     Divider(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -327,30 +320,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text('About Enviroewatch',
-                                  style: poppinsBold.copyWith(
-                                      fontSize: 14,
-                                      color: ColorResources.getTextColor(
-                                          context))),
+                                style: poppinsBold.copyWith( fontSize: 14,
+                                  color: ColorResources.getTextColor(context))),
                               SizedBox(height: 2),
                               Consumer<SplashProvider>(
-                                builder: (context, config, child) => Row(
+                                builder: (context, splashProvider, child) {
+                                final aboutUs = splashProvider.configModel?.aboutUs ?? 'Information not available';
+                                return Row(
                                   children: [
                                     Flexible(
                                       child: Text(
-                                          Provider.of<SplashProvider>(
-                                                  context,
-                                                  listen: false)
-                                              .configModel!
-                                              .aboutUs,
-                                          style: poppinsRegular.copyWith(
-                                              fontSize: Dimensions
-                                                  .FONT_SIZE_SMALL,
-                                              color: ColorResources
-                                                  .getHintColor(
-                                                      context))),
+                                        aboutUs,
+                                        style: poppinsRegular.copyWith(
+                                          fontSize: Dimensions.FONT_SIZE_SMALL,
+                                          color: ColorResources.getHintColor(context),
+                                        ),
+                                      ),
                                     ),
-                                  ],
-                              )),
+                                  ],);
+                                },
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

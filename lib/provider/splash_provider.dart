@@ -23,6 +23,20 @@ class SplashProvider extends ChangeNotifier {
   bool get fromSetting => _fromSetting;
   bool get firstTimeConnectionCheck => _firstTimeConnectionCheck;
 
+  String? _errorMessage;
+
+  String? get errorMessage => _errorMessage;
+
+  void setError(String message) {
+    _errorMessage = message;
+    notifyListeners();
+  }
+
+  void clearError() {
+    _errorMessage = null;
+    notifyListeners();
+  }
+
   Future<bool> initConfig(BuildContext context) async {
     ApiResponse apiResponse = await splashRepo.getConfig();
     bool isSuccess;
@@ -34,9 +48,16 @@ class SplashProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       isSuccess = false;
-      print(apiResponse.error);
-      
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(apiResponse.error.toString()), backgroundColor: Colors.black));
+       String errorText;
+      if (apiResponse.error is String) {
+        errorText = apiResponse.error;
+      } else {
+        errorText = apiResponse.error.errors.isNotEmpty
+            ? apiResponse.error.errors.first.message
+            : 'Unexpected error occurred';
+      }
+
+      setError(errorText); // Save the error message
     }
     return isSuccess;
   }

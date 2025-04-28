@@ -89,7 +89,7 @@ class NotificationHelper {
   }
 
   static Future<void> showBigTextNotification(
-      String title, String body, FlutterLocalNotificationsPlugin fln) async {
+    String title, String body, FlutterLocalNotificationsPlugin fln) async {
     BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
       body,
       htmlFormatBigText: true,

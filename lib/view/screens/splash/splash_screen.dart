@@ -20,12 +20,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   GlobalKey<ScaffoldMessengerState> _globalKey = GlobalKey();
-  late StreamSubscription<ConnectivityResult> _onConnectivityChanged;
+  late StreamSubscription<List<ConnectivityResult>> _onConnectivityChanged;
 
   @override
   void dispose() {
     super.dispose();
-
     _onConnectivityChanged.cancel();
   }
 
@@ -36,14 +35,18 @@ class _SplashScreenState extends State<SplashScreen> {
     bool _firstTime = true;
     _onConnectivityChanged = Connectivity()
         .onConnectivityChanged
-        .listen((ConnectivityResult result) {
+        .listen((List<ConnectivityResult> results) {
+      ConnectivityResult result =
+          results.isNotEmpty ? results.first : ConnectivityResult.none;
+
       if (!_firstTime) {
         bool isNotConnected = result != ConnectivityResult.wifi &&
             result != ConnectivityResult.mobile;
         print('-----------------${isNotConnected ? 'Not' : 'Yes'}');
-        isNotConnected
-            ? SizedBox()
-            : ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        if (!isNotConnected) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: isNotConnected ? Colors.red : Colors.green,
           duration: Duration(seconds: isNotConnected ? 6000 : 3),
@@ -57,8 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       }
       _firstTime = false;
-    } as void Function(List<ConnectivityResult> event)?) as StreamSubscription<ConnectivityResult>;
-
+    });
     _route();
   }
 
@@ -69,21 +71,36 @@ class _SplashScreenState extends State<SplashScreen> {
       if (isSuccess) {
         Timer(Duration(seconds: 1), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-            Provider.of<AuthProvider>(context, listen: false).updateToken();
-            Navigator.of(context).pushReplacementNamed(RouteHelper.menu,
-                arguments: MenuScreen());
-                
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => MenuScreen()),
+            );
           } else {
-            Navigator.pushNamedAndRemoveUntil(
-                context, RouteHelper.login, (route) => false,
-                arguments: LoginScreen());
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => LoginScreen()),
+            );
           }
         });
+      } else {
+        // Handle the case where initConfig failed
+        final splashProvider =
+            Provider.of<SplashProvider>(context, listen: false);
+        if (splashProvider.errorMessage != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(splashProvider.errorMessage!,
+                    style: TextStyle(color: Colors.white)),
+                backgroundColor: Colors.red,
+              ),
+            );
+            splashProvider
+                .clearError(); // Clear the error message after displaying it
+          });
+        }
       }
     });
-    print('${Provider.of<AuthProvider>(context,
-                                              listen: false)
-                                          .getUserToken()}');
   }
 
   @override

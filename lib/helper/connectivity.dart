@@ -13,24 +13,24 @@ class NetworkInfo {
   }
 
   static void checkConnectivity(BuildContext context) {
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-
+    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
+    ConnectivityResult result = results.isNotEmpty ? results.first : ConnectivityResult.none;
       if (Provider.of<SplashProvider>(context, listen: false).firstTimeConnectionCheck) {
-        Provider.of<SplashProvider>(context, listen: false).setFirstTimeConnectionCheck(false);
-      } else {
-        bool isNotConnected = result == ConnectivityResult.none;
-        if (!isNotConnected) {
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        }        
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          backgroundColor: isNotConnected ? Colors.black: Colors.green,
-          duration: Duration(seconds: isNotConnected ? 6000 : 3),
-          content: Text(
-            isNotConnected ? 'no connection' : 'connected',
-            textAlign: TextAlign.center,
-          ),
-        ));
-      }
-    } as void Function(List<ConnectivityResult> event)?);
+          Provider.of<SplashProvider>(context, listen: false).setFirstTimeConnectionCheck(false);
+        } else {
+          bool isNotConnected = result == ConnectivityResult.none;
+          if (!isNotConnected) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          }        
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: isNotConnected ? Colors.black: Colors.green,
+            duration: Duration(seconds: isNotConnected ? 6000 : 3),
+            content: Text(
+              isNotConnected ? 'no connection' : 'connected',
+              textAlign: TextAlign.center,
+            ),
+          ));
+        }
+    });
   }
 }

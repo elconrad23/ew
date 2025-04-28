@@ -52,7 +52,7 @@ class MyDrawer extends StatelessWidget {
                                           child: FadeInImage.assetNetwork(
                                         placeholder: Images.placeholder,
                                         image:
-                                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel != null ? profileProvider.userInfoModel.photo : ''}',
+                                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.userImageUrl}/${profileProvider.userInfoModel != null ? profileProvider.userInfoModel?.photo : ''}',
                                         height: 50,
                                         width: 50,
                                         fit: BoxFit.cover,
@@ -74,7 +74,7 @@ class MyDrawer extends StatelessWidget {
                                 alignment: FractionalOffset.center,
                                 child: Text(
                                   profileProvider.userInfoModel != null
-                                      ? '${profileProvider.userInfoModel.username ?? ''}'
+                                      ? '${profileProvider.userInfoModel?.username ?? ''}'
                                       : '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class MyDrawer extends StatelessWidget {
                                 alignment: FractionalOffset.center,
                                 child: Text(
                                   profileProvider.userInfoModel != null
-                                      ? '${profileProvider.userInfoModel.phone ?? ''}'
+                                      ? '${profileProvider.userInfoModel?.phone ?? ''}'
                                       : '',
                                   style: TextStyle(
                                     fontSize: 15,

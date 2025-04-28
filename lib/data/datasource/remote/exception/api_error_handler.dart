@@ -7,22 +7,22 @@ class ApiErrorHandler {
     dynamic errorDescription = "";
     if (error is Exception) {
       try {
-        if (error is DioError) {
+        if (error is DioException) {
           switch (error.type) {
-            case DioErrorType.cancel:
+            case DioExceptionType.cancel:
               errorDescription = "Request to server was cancelled";
               break;
-            case DioErrorType.connectionTimeout:
+            case DioExceptionType.connectionTimeout:
               errorDescription = "Connection timeout";
               break;
-            case DioErrorType.unknown:
+            case DioExceptionType.unknown:
               errorDescription = "Connection failed due to internet connection";
               break;
-            case DioErrorType.receiveTimeout:
+            case DioExceptionType.receiveTimeout:
               errorDescription =
                   "Receive timeout in connection with the server";
               break;
-            case DioErrorType.connectionError:
+            case DioExceptionType.connectionError:
               switch (error.response?.statusCode) {
                 case 404:
                 case 500:
@@ -39,14 +39,14 @@ class ApiErrorHandler {
                         "Failed to load data - status code: ${error.response?.statusCode}";
               }
               break;
-            case DioErrorType.sendTimeout:
+            case DioExceptionType.sendTimeout:
               errorDescription = "Send timeout with server";
               break;
-            case DioErrorType.badCertificate:
-              // TODO: Handle this case.
+            case DioExceptionType.badCertificate:
+              errorDescription = "Bad certificate error occured";
               throw UnimplementedError();
-            case DioErrorType.badResponse:
-              // TODO: Handle this case.
+            case DioExceptionType.badResponse:
+              errorDescription = "Bad response error occured";
               throw UnimplementedError();
           }
         } else {

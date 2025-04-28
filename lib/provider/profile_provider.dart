@@ -16,9 +16,9 @@ class ProfileProvider with ChangeNotifier {
 
   ProfileProvider({required this.profileRepo});
 
-  late UserInfoModel _userInfoModel;
+  UserInfoModel? _userInfoModel;
 
-  UserInfoModel get userInfoModel => _userInfoModel;
+  UserInfoModel? get userInfoModel => _userInfoModel;
 
     Future<ResponseModel> getUserInfo(BuildContext context) async {
     ResponseModel _responseModel;
